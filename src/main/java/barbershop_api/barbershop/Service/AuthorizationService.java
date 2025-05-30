@@ -1,5 +1,6 @@
 package barbershop_api.barbershop.Service;
 
+import barbershop_api.barbershop.DTO.AuthenticationDTO;
 import barbershop_api.barbershop.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,4 +18,5 @@ public class AuthorizationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByLogin(username);
     }
+
 }

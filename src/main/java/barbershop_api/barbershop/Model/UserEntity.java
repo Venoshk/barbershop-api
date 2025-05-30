@@ -28,13 +28,16 @@ public class UserEntity implements UserDetails {
     @Column(name = "LOGIN")
     private String login;
 
-    @Column(name = "NOME")
-    private String nome;
-
     @Column(name = "SENHA")
     private String senha;
 
     private UserRole role;
+
+    public UserEntity(String login, String senha, UserRole role){
+        this.login = login;
+        this.senha = senha;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
