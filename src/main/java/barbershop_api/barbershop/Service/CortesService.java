@@ -65,4 +65,23 @@ public class CortesService {
             }
         }
     }
+
+    public CortesEntity alterar(Long id, CortesDTO dto) throws DefaultExceptionHandler {
+        try{
+            CortesEntity objeto = buscarPorId(id);
+            objeto.setPreco(dto.getPreco());
+            objeto.setDesc(dto.getDesc());
+            objeto.setCategoria(dto.getCategoria());
+            objeto.setAtivo(dto.getAtivo());
+            objeto.setDataAtualizacao(dto.getDataAtualizacao());
+
+            return cortesRepository.save(objeto);
+        }catch (Exception e) {
+            if (e instanceof DefaultExceptionHandler) {
+                throw e;
+            } else {
+                throw new DefaultExceptionHandler(e);
+            }
+        }
+    }
 }
