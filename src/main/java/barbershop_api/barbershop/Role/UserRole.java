@@ -2,7 +2,8 @@ package barbershop_api.barbershop.Role;
 
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    USER("user"),
+    BARBER("barber");
 
     private String role;
 

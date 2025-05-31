@@ -33,7 +33,7 @@ public class UserEntity implements UserDetails {
 
     private UserRole role;
 
-    public UserEntity(String login, String senha, UserRole role){
+    public UserEntity(String login, String senha, UserRole role) {
         this.login = login;
         this.senha = senha;
         this.role = role;
@@ -41,8 +41,18 @@ public class UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_BARBER"),
+                    new SimpleGrantedAuthority("ROLE_USER")
+            );
+        } else if (this.role == UserRole.BARBER) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_BARBER"),
+                    new SimpleGrantedAuthority("ROLE_USER")
+            );
+        } else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
