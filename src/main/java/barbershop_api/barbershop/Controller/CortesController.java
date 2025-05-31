@@ -23,6 +23,12 @@ public class CortesController {
         return ResponseEntity.ok(listar);
     }
 
+    @GetMapping(value = "/listar-por-id/{id}")
+    public ResponseEntity<CortesEntity> listarPorId(@PathVariable("id") Long id) throws DefaultExceptionHandler {
+        CortesEntity listar = cortesService.buscarPorId(id);
+        return ResponseEntity.ok(listar);
+    }
+
 
     @PostMapping(value = "/incluir")
     public ResponseEntity<CortesDTO> incluir(@RequestBody CortesDTO dto) throws DefaultExceptionHandler {
@@ -35,4 +41,6 @@ public class CortesController {
         ResponseEntity excluir = cortesService.deletar(id);
         return ResponseEntity.ok().body(excluir);
     }
+
+
 }
