@@ -29,4 +29,10 @@ public class CortesController {
         CortesDTO salvar = cortesService.incluir(dto);
         return ResponseEntity.ok(salvar);
     }
+
+    @DeleteMapping(value = "/excluir/{id}")
+    public ResponseEntity deletar(@PathVariable("id") Long id) throws DefaultExceptionHandler {
+        ResponseEntity excluir = cortesService.deletar(id);
+        return ResponseEntity.ok().body(excluir);
+    }
 }

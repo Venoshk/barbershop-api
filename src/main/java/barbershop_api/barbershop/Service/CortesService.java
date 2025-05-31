@@ -5,6 +5,7 @@ import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.CortesEntity;
 import barbershop_api.barbershop.Repository.CortesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import static barbershop_api.barbershop.ModelMapper.CortesMapper.*;
 
@@ -37,5 +38,16 @@ public class CortesService {
         }
     }
 
-
+    public ResponseEntity deletar(Long id) throws DefaultExceptionHandler {
+        try {
+            cortesRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            if (e instanceof DefaultExceptionHandler) {
+                throw e;
+            } else {
+                throw new DefaultExceptionHandler(e);
+            }
+        }
+    }
 }
