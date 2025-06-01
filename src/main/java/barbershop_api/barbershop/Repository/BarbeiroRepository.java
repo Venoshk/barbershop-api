@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BarbeiroRepository extends JpaRepository<BarbeiroEntity, Long> {
-    UserDetails findByLogin(String login);
+    BarbeiroEntity findByLogin(String login);
 }

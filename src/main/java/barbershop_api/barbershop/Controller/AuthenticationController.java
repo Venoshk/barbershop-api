@@ -13,6 +13,7 @@ import org.springframework.data.repository.Repository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,8 @@ public class AuthenticationController {
            var userNamePassword = new UsernamePasswordAuthenticationToken(dto.getLogin(), dto.getSenha());
            var auth = this.authenticationManager.authenticate(userNamePassword);
 
-           var token = tokenService.genereteToken((UserEntity) auth.getPrincipal());
+           var userDetails = (UserDetails) auth.getPrincipal();
+           var token = tokenService.genereteToken(userDetails);
 
            return ResponseEntity.ok(new LoginResponseDTO(token));
        } catch (RuntimeException e) {
