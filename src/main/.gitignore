@@ -1,2 +1,4 @@
-
 resources
+
+# EXCEÇÃO: Permite este arquivo passar
+!/src/main/resources/application-example.properties
