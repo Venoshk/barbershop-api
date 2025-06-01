@@ -35,6 +35,7 @@ public class SegurityConfigurantions {
                         .requestMatchers(HttpMethod.POST, "/barbeiro/cadastrar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/barbeiro/listar-por-id/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/barbeiro/alterar").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/barbeiro/listar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cortes/excluir/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/cortes/alterar").hasRole("BARBER")
                         .requestMatchers(HttpMethod.DELETE, "/cortes/listar-por-id/**").hasRole("USER")

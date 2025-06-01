@@ -13,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BarbeiroService {
 
@@ -21,6 +23,19 @@ public class BarbeiroService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public List<BarbeiroEntity> listar() throws DefaultExceptionHandler{
+        try{
+          return barbeiroRepository.findAll();
+        }catch (Exception e) {
+            if (e instanceof DefaultExceptionHandler) {
+                throw e;
+            } else {
+                throw new DefaultExceptionHandler(e);
+            }
+        }
+    }
+
 
     public ResponseEntity<BarbeiroEntity> cadastrar (BarbeiroDTO dto) throws DefaultExceptionHandler {
         try{
@@ -40,8 +55,12 @@ public class BarbeiroService {
 
             return ResponseEntity.ok(salvo);
 
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            if (e instanceof DefaultExceptionHandler) {
+                throw e;
+            } else {
+                throw new DefaultExceptionHandler(e);
+            }
         }
     }
 
