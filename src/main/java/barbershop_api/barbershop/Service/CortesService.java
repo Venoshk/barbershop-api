@@ -28,12 +28,18 @@ public class CortesService {
         }
     }
 
-    public CortesDTO incluir(CortesDTO dto) throws DefaultExceptionHandler {
+    public ResponseEntity<CortesEntity> incluir(CortesDTO dto) throws DefaultExceptionHandler {
         try{
-          CortesEntity entity = toEntity(dto);
+            CortesEntity objeto = new CortesEntity();
+            objeto.setPreco(dto.getPreco());
+            objeto.setDesc(dto.getDesc());
+            objeto.setCategoria(dto.getCategoria());
+            objeto.setAtivo(dto.getAtivo());
+            objeto.setDataCriacao(dto.getDataCriacao());
+            objeto.setDataAtualizacao(dto.getDataAtualizacao());
 
-          CortesEntity salvo = cortesRepository.save(entity);
-          return toDTO(salvo);
+            CortesEntity salvo = cortesRepository.save(objeto);
+            return ResponseEntity.ok(salvo);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

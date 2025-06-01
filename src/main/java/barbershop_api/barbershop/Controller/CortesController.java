@@ -31,9 +31,8 @@ public class CortesController {
 
 
     @PostMapping(value = "/incluir")
-    public ResponseEntity<CortesDTO> incluir(@RequestBody CortesDTO dto) throws DefaultExceptionHandler {
-        CortesDTO salvar = cortesService.incluir(dto);
-        return ResponseEntity.ok(salvar);
+    public ResponseEntity<CortesEntity> incluir(@RequestBody CortesDTO dto) throws DefaultExceptionHandler {
+       return cortesService.incluir(dto);
     }
 
     @DeleteMapping(value = "/excluir/{id}")
