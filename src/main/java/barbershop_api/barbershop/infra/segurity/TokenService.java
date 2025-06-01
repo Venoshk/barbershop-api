@@ -1,6 +1,5 @@
 package barbershop_api.barbershop.infra.segurity;
 
-import barbershop_api.barbershop.Model.UserEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;

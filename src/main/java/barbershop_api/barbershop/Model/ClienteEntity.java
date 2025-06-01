@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.switchuser.SwitchUserGrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,12 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "TBL_USUARIOS")
-public class UserEntity implements UserDetails {
+@Table(name = "TBL_CLIENTE")
+public class ClienteEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COD_USUARIO")
+    @Column(name = "COD_CLIENTE")
     private Long id;
 
     @Column(name = "LOGIN")
@@ -33,7 +32,7 @@ public class UserEntity implements UserDetails {
 
     private UserRole role;
 
-    public UserEntity(String login, String senha, UserRole role) {
+    public ClienteEntity(String login, String senha, UserRole role) {
         this.login = login;
         this.senha = senha;
         this.role = role;

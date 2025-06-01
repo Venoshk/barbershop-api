@@ -1,10 +1,9 @@
 package barbershop_api.barbershop.Service;
 
-import barbershop_api.barbershop.DTO.AuthenticationDTO;
 import barbershop_api.barbershop.Model.BarbeiroEntity;
-import barbershop_api.barbershop.Model.UserEntity;
+import barbershop_api.barbershop.Model.ClienteEntity;
 import barbershop_api.barbershop.Repository.BarbeiroRepository;
-import barbershop_api.barbershop.Repository.UserRepository;
+import barbershop_api.barbershop.Repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,14 +14,14 @@ import org.springframework.stereotype.Service;
 public class AuthorizationService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private ClienteRepository ClienteRepository;
 
     @Autowired
     private BarbeiroRepository barbeiroRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByLogin(username);
+        ClienteEntity user = ClienteRepository.findByLogin(username);
 
         if(user != null){
             return user;

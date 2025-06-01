@@ -4,18 +4,16 @@ import barbershop_api.barbershop.DTO.AuthenticationDTO;
 import barbershop_api.barbershop.DTO.CadastroDTO;
 import barbershop_api.barbershop.DTO.LoginResponseDTO;
 import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
-import barbershop_api.barbershop.Model.UserEntity;
-import barbershop_api.barbershop.Repository.UserRepository;
+import barbershop_api.barbershop.Model.ClienteEntity;
+import barbershop_api.barbershop.Repository.ClienteRepository;
 import barbershop_api.barbershop.infra.segurity.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +27,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private ClienteRepository userRepository;
 
     @Autowired
     private TokenService tokenService;
@@ -55,7 +53,7 @@ public class AuthenticationController {
            if(userRepository.findByLogin(dto.getLogin()) != null) return ResponseEntity.badRequest().build();
 
            String encryptePassword = new BCryptPasswordEncoder().encode(dto.getSenha());
-           UserEntity user = new UserEntity(dto.getLogin(), encryptePassword, dto.getRole());
+           ClienteEntity user = new ClienteEntity(dto.getLogin(), encryptePassword, dto.getRole());
 
            userRepository.save(user);
 
