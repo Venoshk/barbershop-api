@@ -41,9 +41,9 @@ public class CortesController {
         return ResponseEntity.ok().body(excluir);
     }
 
-    @PutMapping(value = "/alterar/{id}")
-    public ResponseEntity<CortesEntity> alterar(@PathVariable("id") Long id, @RequestBody CortesDTO dto) throws DefaultExceptionHandler{
-        CortesEntity listar = cortesService.alterar(id, dto);
+    @PutMapping(value = "/alterar")
+    public ResponseEntity<CortesEntity> alterar(@RequestBody CortesDTO dto) throws DefaultExceptionHandler{
+        CortesEntity listar = cortesService.alterar(dto);
         return ResponseEntity.ok().body(listar);
     }
 

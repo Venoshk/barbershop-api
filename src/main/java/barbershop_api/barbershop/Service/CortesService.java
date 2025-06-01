@@ -72,9 +72,9 @@ public class CortesService {
         }
     }
 
-    public CortesEntity alterar(Long id, CortesDTO dto) throws DefaultExceptionHandler {
+    public CortesEntity alterar(CortesDTO dto) throws DefaultExceptionHandler {
         try{
-            CortesEntity objeto = buscarPorId(id);
+            CortesEntity objeto = buscarPorId(dto.getId());
             objeto.setPreco(dto.getPreco());
             objeto.setDesc(dto.getDesc());
             objeto.setCategoria(dto.getCategoria());
