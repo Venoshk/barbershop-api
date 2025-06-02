@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -24,11 +25,26 @@ public class ClienteEntity implements UserDetails {
     @Column(name = "COD_CLIENTE")
     private Long id;
 
+    @Column(name = "NOME")
+    private String nome;
+
     @Column(name = "LOGIN")
     private String login;
 
     @Column(name = "SENHA")
     private String senha;
+
+    @Column(name = "CPF")
+    private String cpf;
+
+    @Column(name = "TELEFONE")
+    private Long telefone;
+
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "DATA_NASCIMENTO")
+    private Date dataNascimento;
 
     private UserRole role;
 

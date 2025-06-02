@@ -49,19 +49,5 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(value = "/cadastro")
-    public ResponseEntity cadastro(@RequestBody @Valid CadastroDTO dto) throws DefaultExceptionHandler{
-       try{
-           if(userRepository.findByLogin(dto.getLogin()) != null) return ResponseEntity.badRequest().build();
 
-           String encryptePassword = new BCryptPasswordEncoder().encode(dto.getSenha());
-           ClienteEntity user = new ClienteEntity(dto.getLogin(), encryptePassword, dto.getRole());
-
-           userRepository.save(user);
-
-           return ResponseEntity.ok().build();
-       } catch (RuntimeException e) {
-           throw new RuntimeException(e);
-       }
-    }
 }
