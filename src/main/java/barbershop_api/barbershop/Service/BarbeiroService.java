@@ -97,4 +97,13 @@ public class BarbeiroService {
             }
         }
     }
+
+    public ResponseEntity excluir(Long id) throws DefaultExceptionHandler{
+        try{
+             barbeiroRepository.deleteById(id);
+             return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -41,5 +41,11 @@ public class BarbeiroController {
         return barbeiroService.cadastrar(dto);
     }
 
+    @DeleteMapping(value = "/excluir/{id}")
+    public ResponseEntity<ResponseEntity> excluir(@PathVariable("id") Long id) throws DefaultExceptionHandler {
+        ResponseEntity listar = barbeiroService.excluir(id);
+        return ResponseEntity.ok().body(listar);
+    }
+
 
 }
