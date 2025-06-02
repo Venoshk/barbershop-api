@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,18 +34,19 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO dto) throws DefaultExceptionHandler {
-       try{
-           var userNamePassword = new UsernamePasswordAuthenticationToken(dto.getLogin(), dto.getSenha());
-           var auth = this.authenticationManager.authenticate(userNamePassword);
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO dto) {
+        try {
+            var userNamePassword = new UsernamePasswordAuthenticationToken(dto.getLogin(), dto.getSenha());
+            var auth = this.authenticationManager.authenticate(userNamePassword);
 
-           var userDetails = (UserDetails) auth.getPrincipal();
-           var token = tokenService.genereteToken(userDetails);
+            var token = tokenService.genereteToken((UserDetails) auth.getPrincipal());
 
-           return ResponseEntity.ok(new LoginResponseDTO(token));
-       } catch (RuntimeException e) {
-           throw new RuntimeException(e);
-       }
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(401).body("Usuário ou senha inválidos.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao Logar.");
+        }
     }
 
     @PostMapping(value = "/cadastro")
