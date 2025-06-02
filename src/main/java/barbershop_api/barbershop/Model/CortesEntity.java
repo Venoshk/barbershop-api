@@ -5,6 +5,7 @@ import jdk.jshell.Snippet;
 import lombok.*;
 
 import javax.lang.model.element.Name;
+import java.sql.Blob;
 import java.util.Date;
 
 @Getter
@@ -37,6 +38,9 @@ public class CortesEntity {
 
     @Column(name = "DATA_ATUALIZACAO")
     private Date dataAtualizacao;
+
+    @Column(name = "CORTE_IMAGEM")
+    private byte[] imagem;
 
 
 }

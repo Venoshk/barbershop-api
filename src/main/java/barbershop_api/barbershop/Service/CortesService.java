@@ -37,6 +37,7 @@ public class CortesService {
             objeto.setAtivo(dto.getAtivo());
             objeto.setDataCriacao(dto.getDataCriacao());
             objeto.setDataAtualizacao(dto.getDataAtualizacao());
+            objeto.setImagem(dto.getImagem());
 
             CortesEntity salvo = cortesRepository.save(objeto);
             return ResponseEntity.ok(salvo);
@@ -80,7 +81,7 @@ public class CortesService {
             objeto.setCategoria(dto.getCategoria());
             objeto.setAtivo(dto.getAtivo());
             objeto.setDataAtualizacao(dto.getDataAtualizacao());
-
+            objeto.setImagem(dto.getImagem());
             return cortesRepository.save(objeto);
         }catch (Exception e) {
             if (e instanceof DefaultExceptionHandler) {

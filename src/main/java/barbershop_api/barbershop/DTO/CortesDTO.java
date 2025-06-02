@@ -17,4 +17,5 @@ public class CortesDTO {
     private Boolean ativo;
     private Date dataCriacao;
     private Date dataAtualizacao;
+    private byte[] imagem;
 }
