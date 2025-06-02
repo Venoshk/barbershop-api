@@ -1,6 +1,8 @@
 package barbershop_api.barbershop.infra.segurity;
 
+import barbershop_api.barbershop.Repository.BarbeiroRepository;
 import barbershop_api.barbershop.Repository.ClienteRepository;
+import barbershop_api.barbershop.Service.AuthorizationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,13 +25,16 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @Autowired
+    AuthorizationService authorizationService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        var token = this.recoverToken(request);
+        String token = this.recoverToken(request);
         if(token != null){
-         var login = tokenService.validateToken(token);
-            UserDetails user = clienteRepository.findByLogin(login);
+         String login = tokenService.validateToken(token);
+            UserDetails user = authorizationService.loadUserByUsername(login);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
