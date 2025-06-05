@@ -5,7 +5,7 @@ import barbershop_api.barbershop.DTO.ClienteResponseDTO;
 import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.ClienteEntity;
 import barbershop_api.barbershop.Repository.ClienteRepository;
-import barbershop_api.barbershop.Role.UserRole;
+import barbershop_api.barbershop.Enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

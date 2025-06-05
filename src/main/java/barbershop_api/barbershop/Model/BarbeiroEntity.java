@@ -1,6 +1,6 @@
 package barbershop_api.barbershop.Model;
 
-import barbershop_api.barbershop.Role.UserRole;
+import barbershop_api.barbershop.Enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

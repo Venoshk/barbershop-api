@@ -1,4 +1,4 @@
-package barbershop_api.barbershop.Role;
+package barbershop_api.barbershop.Enums;
 
 public enum UserRole {
     ADMIN("admin"),

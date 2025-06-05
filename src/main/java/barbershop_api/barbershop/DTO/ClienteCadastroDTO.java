@@ -1,6 +1,6 @@
 package barbershop_api.barbershop.DTO;
 
-import barbershop_api.barbershop.Role.UserRole;
+import barbershop_api.barbershop.Enums.UserRole;
 import lombok.*;
 
 import java.util.Date;
