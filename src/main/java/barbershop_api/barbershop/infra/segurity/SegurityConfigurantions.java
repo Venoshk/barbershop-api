@@ -40,6 +40,7 @@ public class SegurityConfigurantions {
                         .requestMatchers(HttpMethod.DELETE, "/barbeiro/excluir/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cortes/excluir/**").hasRole("BARBER")
                         .requestMatchers(HttpMethod.PUT, "/cortes/alterar").hasRole("BARBER")
+                        .requestMatchers(HttpMethod.PUT, "/horario/cadastrar").hasRole("BARBER")
                         .requestMatchers(HttpMethod.POST, "/cortes/incluir").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/cortes/listar").authenticated()
                         .requestMatchers(HttpMethod.GET, "/cortes/listar-por-id/**").authenticated()
