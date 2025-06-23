@@ -1,0 +1,82 @@
+package barbershop_api.barbershop.Validation;
+
+import barbershop_api.barbershop.DTO.ReservasDTO;
+import barbershop_api.barbershop.Enums.DiaDaSemana;
+import barbershop_api.barbershop.Repository.BarbeiroRepository;
+import barbershop_api.barbershop.Repository.ClienteRepository;
+import barbershop_api.barbershop.Repository.CortesRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+@Component
+public class ReservaValidator {
+
+    private final BarbeiroRepository barbeiroRepository;
+    private final ClienteRepository clienteRepository;
+    private final CortesRepository cortesRepository;
+
+    public ReservaValidator(BarbeiroRepository barbeiroRepository,
+                            ClienteRepository clienteRepository,
+                            CortesRepository cortesRepository) {
+        this.barbeiroRepository = barbeiroRepository;
+        this.clienteRepository = clienteRepository;
+        this.cortesRepository = cortesRepository;
+    }
+
+    public void validar(ReservasDTO dto) {
+        validarCampoObrigatorios(dto);
+        validarBarbeiroExistente(dto.getCodBarbeiro());
+        validarClienteExiste(dto.getCodCliente());
+        validarCorteExiste(dto.getCodCorte());
+        validarHorario(dto.getHorarioCorte());
+        validarDiaDaSemana(String.valueOf(dto.getDiaDaSemana()));
+    }
+
+    private void validarCampoObrigatorios(ReservasDTO dto) {
+        if (dto.getCodBarbeiro() == null || dto.getCodCliente() == null || dto.getCodCorte() == null || dto.getDiaDaSemana() == null || dto.getHorarioCorte() == null) {
+            throw new RuntimeException("Todos os campos são obrigatórios.");
+        }
+    }
+
+    private void validarBarbeiroExistente(Long codBarbeiro) {
+        if (!barbeiroRepository.existsById(codBarbeiro)) {
+            throw new RuntimeException("Barbeiro não encontrado.");
+        }
+    }
+
+    private void validarClienteExiste(Long codCliente) {
+        if (!clienteRepository.existsById(codCliente)) {
+            throw new RuntimeException("Cliente não encontrado.");
+        }
+    }
+
+    private void validarCorteExiste(Long codCorte) {
+        if (!cortesRepository.existsById(codCorte)) {
+            throw new RuntimeException("Corte não encontrado.");
+        }
+    }
+
+    private void validarHorario(String horario) {
+        try {
+            LocalTime.parse(horario, DateTimeFormatter.ofPattern("HH:mm"));
+        } catch (Exception e) {
+            throw new RuntimeException("Formato de horário inválido. Use HH:mm");
+        }
+    }
+
+    private void validarDiaDaSemana(String dia) {
+        try {
+            DiaDaSemana.valueOf(dia.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Dia da semana inválido. Exemplo de valor válido: SEGUNDA");
+        }
+    }
+
+}

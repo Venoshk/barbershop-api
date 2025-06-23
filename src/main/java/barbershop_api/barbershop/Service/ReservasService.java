@@ -5,6 +5,7 @@ import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.ReservasCortesEntity;
 import barbershop_api.barbershop.Repository.BarbeiroRepository;
 import barbershop_api.barbershop.Repository.ReversasRepository;
+import barbershop_api.barbershop.Validation.ReservaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +27,14 @@ public class ReservasService {
     @Autowired
     private BarbeiroRepository barbeiroRepository;
 
+    @Autowired
+    private ReservaValidator reservaValidator;
+
     public ResponseEntity<ReservasCortesEntity> cadastrar(ReservasDTO dto) throws DefaultExceptionHandler {
 
         try {
 
-            if (!barbeiroRepository.existsById(dto.getCodBarbeiro())) {
-                throw new RuntimeException("Erro: Barbeiro com ID " + dto.getCodBarbeiro() + " não encontrado.");
-            }
+            reservaValidator.validar(dto);
 
             LocalTime horarioCorte = LocalTime.parse(dto.getHorarioCorte(), DateTimeFormatter.ofPattern("HH:mm"));
 
