@@ -38,4 +38,6 @@ public class DefaultExceptionHandler extends Exception {
         this.errorResponse.setUserMessage("Operação inválida! Ocorreu um erro ao executar a operação.");
         this.errorResponse.setDeveloperMessage(ExceptionUtils.getStackTrace(cause));
     }
+
+
 }
