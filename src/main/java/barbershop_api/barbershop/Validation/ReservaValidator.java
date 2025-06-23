@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -37,6 +38,7 @@ public class ReservaValidator {
         validarCorteExiste(dto.getCodCorte());
         validarHorario(dto.getHorarioCorte());
         validarDiaDaSemana(String.valueOf(dto.getDiaDaSemana()));
+        validarHorarioDaSolicitacaoDeReserva(dto);
     }
 
     private void validarCampoObrigatorios(ReservasDTO dto) {
@@ -67,7 +69,7 @@ public class ReservaValidator {
         try {
             LocalTime.parse(horario, DateTimeFormatter.ofPattern("HH:mm"));
         } catch (Exception e) {
-            throw new RuntimeException("Formato de horário inválido. Use HH:mm");
+            throw new RuntimeException("Formato de horário inválido.");
         }
     }
 
@@ -75,7 +77,20 @@ public class ReservaValidator {
         try {
             DiaDaSemana.valueOf(dia.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Dia da semana inválido. Exemplo de valor válido: SEGUNDA");
+            throw new RuntimeException("Dia da semana inválido.");
+        }
+    }
+
+    private void validarHorarioDaSolicitacaoDeReserva(ReservasDTO dto){
+
+        LocalTime horario = LocalTime.parse(dto.getHorarioCorte(), DateTimeFormatter.ofPattern("HH:mm"));
+
+        try{
+            if(horario.isBefore(LocalTime.of(8, 0)) || horario.isAfter(LocalTime.of(18, 0))){
+                throw new RuntimeException("Horário fora do expediente. Permitido apenas entre 08:00 e 18:00.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Formato de horário inválido.");
         }
     }
 
