@@ -34,4 +34,7 @@ public class ReservasCortesEntity {
     @Column(name = "HORARIO_CORTE")
     private LocalTime horarioCorte;
 
+    @Column(name = "STATUS")
+    private Long codFluxo;
+
 }

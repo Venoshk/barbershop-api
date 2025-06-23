@@ -5,12 +5,7 @@ import barbershop_api.barbershop.Enums.DiaDaSemana;
 import barbershop_api.barbershop.Repository.BarbeiroRepository;
 import barbershop_api.barbershop.Repository.ClienteRepository;
 import barbershop_api.barbershop.Repository.CortesRepository;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
+import barbershop_api.barbershop.Repository.ReversasRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -22,13 +17,16 @@ public class ReservaValidator {
     private final BarbeiroRepository barbeiroRepository;
     private final ClienteRepository clienteRepository;
     private final CortesRepository cortesRepository;
+    private final ReversasRepository reversasRepository;
 
     public ReservaValidator(BarbeiroRepository barbeiroRepository,
                             ClienteRepository clienteRepository,
-                            CortesRepository cortesRepository) {
+                            CortesRepository cortesRepository,
+                            ReversasRepository reversasRepository ) {
         this.barbeiroRepository = barbeiroRepository;
         this.clienteRepository = clienteRepository;
         this.cortesRepository = cortesRepository;
+        this.reversasRepository = reversasRepository;
     }
 
     public void validar(ReservasDTO dto) {

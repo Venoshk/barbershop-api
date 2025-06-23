@@ -15,6 +15,7 @@ public class ReservasDTO {
     private Long codCliente;
     private Long codCorte;
     private Long codBarbeiro;
+    private Long codFluxo;
     private DiaDaSemana diaDaSemana;
     private String horarioCorte;
 }

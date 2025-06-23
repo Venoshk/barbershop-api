@@ -32,6 +32,7 @@ public class SegurityConfigurantions {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/clientes/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "/reservas/solicitar").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/reservas/alterar").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/clientes/listar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/clientes/alterar").authenticated()
                         .requestMatchers(HttpMethod.POST, "/barbeiro/cadastrar").hasRole("ADMIN")
