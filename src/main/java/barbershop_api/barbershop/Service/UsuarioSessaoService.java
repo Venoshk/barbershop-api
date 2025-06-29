@@ -48,20 +48,4 @@ public class UsuarioSessaoService {
             repository.saveAll(sessoesExpiradas);
         }
     }
-
-    @Transactional
-    public ResponseEntity registrarLogout(Long codUsuario) throws DefaultExceptionHandler{
-        Pageable limit = PageRequest.of(0, 1);
-        List<UsuarioSessaoEntity> sessoes = repository.findBySessaoAtivaMaisRecente(codUsuario, "O", limit);
-
-        if(!sessoes.isEmpty()){
-            UsuarioSessaoEntity sesssoesAtivas = sessoes.get(0);
-            sesssoesAtivas.setDataLogout(new Date());
-            sesssoesAtivas.setStatus("F");
-            repository.save(sesssoesAtivas);
-        }
-        return ResponseEntity.ok("Logout realizado com sucesso.");
-    }
-
-
 }

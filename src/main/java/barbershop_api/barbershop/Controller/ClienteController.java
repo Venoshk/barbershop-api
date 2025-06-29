@@ -40,9 +40,4 @@ public class ClienteController {
         ClienteEntity listar = clienteService.alterar(dto);
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping(value = "/logout/{codUsuario}")
-    public ResponseEntity logout(@PathVariable Long codUsuario) throws DefaultExceptionHandler{
-        return usuarioSessaoService.registrarLogout(codUsuario);
-    }
 }
