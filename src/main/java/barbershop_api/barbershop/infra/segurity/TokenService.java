@@ -11,12 +11,16 @@ import com.auth0.jwt.algorithms.Algorithm;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 @Service
 public class TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;
+
+    @Value("${jwt.expirationTimeAccessToken}")
+    private long expirationTimeAccessToken;
 
     public String genereteToken(UserDetails userDetails){
         try{
@@ -27,7 +31,7 @@ public class TokenService {
                     .withClaim("roles", userDetails.getAuthorities().stream()
                             .map(role -> role.getAuthority())
                             .toList())
-                    .withExpiresAt(genExpirationDate())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + expirationTimeAccessToken))
                     .sign(algorithm);
 
             return token;
@@ -49,8 +53,9 @@ public class TokenService {
         }
     }
 
-    private Instant genExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    public Date calcularDataDeExpiracaoParaNovoToken() {
+        return new Date(System.currentTimeMillis() + expirationTimeAccessToken);
     }
+
 
 }

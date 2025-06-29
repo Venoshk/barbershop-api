@@ -5,6 +5,7 @@ import barbershop_api.barbershop.DTO.ClienteResponseDTO;
 import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.ClienteEntity;
 import barbershop_api.barbershop.Service.ClienteService;
+import barbershop_api.barbershop.Service.UsuarioSessaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,10 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private UsuarioSessaoService usuarioSessaoService;
+
 
     @GetMapping(value = "/listar")
     public ResponseEntity<List<ClienteResponseDTO>> listar() throws DefaultExceptionHandler{
@@ -34,5 +39,10 @@ public class ClienteController {
     public ResponseEntity<ClienteEntity> alterar(@RequestBody @Valid ClienteResponseDTO dto) throws DefaultExceptionHandler{
         ClienteEntity listar = clienteService.alterar(dto);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/logout/{codUsuario}")
+    public ResponseEntity logout(@PathVariable Long codUsuario) throws DefaultExceptionHandler{
+        return usuarioSessaoService.registrarLogout(codUsuario);
     }
 }

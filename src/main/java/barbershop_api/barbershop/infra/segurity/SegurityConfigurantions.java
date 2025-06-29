@@ -30,6 +30,7 @@ public class SegurityConfigurantions {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/clientes/logout/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/clientes/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "/reservas/solicitar").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/reservas/alterar").hasRole("USER")

@@ -6,19 +6,20 @@ import barbershop_api.barbershop.DTO.LoginResponseDTO;
 import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.ClienteEntity;
 import barbershop_api.barbershop.Repository.ClienteRepository;
+import barbershop_api.barbershop.Service.UsuarioSessaoService;
 import barbershop_api.barbershop.infra.segurity.TokenService;
+import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -32,6 +33,7 @@ public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
+
 
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO dto) {
@@ -48,6 +50,7 @@ public class AuthenticationController {
             return ResponseEntity.status(500).body("Erro ao Logar.");
         }
     }
+
 
 
 }
