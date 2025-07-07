@@ -1,5 +1,6 @@
 package barbershop_api.barbershop.Controller;
 
+import barbershop_api.barbershop.DTO.ConsultarReservasDTO;
 import barbershop_api.barbershop.DTO.ReservasDTO;
 import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Model.ReservasCortesEntity;
@@ -17,6 +18,11 @@ public class ReservasController {
 
     @Autowired
     private ReservasService reservasService;
+
+    @GetMapping(value = "/suas/{id}")
+    public List<ConsultarReservasDTO> buscarPorReservas(@PathVariable("id") Long id) throws DefaultExceptionHandler{
+        return reservasService.buscarPorReservas(id);
+    }
 
     @PostMapping(value = "/solicitar")
     public ResponseEntity<ReservasCortesEntity> cadastrar (@RequestBody @Valid ReservasDTO dto) throws DefaultExceptionHandler{

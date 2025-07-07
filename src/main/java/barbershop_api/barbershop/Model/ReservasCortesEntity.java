@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class ReservasCortesEntity {
     private DiaDaSemana diaDaSemana;
 
     @Column(name = "HORARIO_CORTE")
-    private LocalTime horarioCorte;
+    private Date horarioCorte;
 
     @Column(name = "STATUS")
     private Long codFluxo;

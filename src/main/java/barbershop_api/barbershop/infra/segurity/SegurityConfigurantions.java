@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -27,12 +30,15 @@ public class SegurityConfigurantions {
     public SecurityFilterChain segurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/clientes/logout/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/clientes/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "/reservas/solicitar").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/reservas/suas/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/reservas/alterar").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/clientes/listar").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/clientes/alterar").authenticated()
