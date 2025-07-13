@@ -2,14 +2,17 @@ package barbershop_api.barbershop.Validation;
 
 import barbershop_api.barbershop.DTO.ReservasDTO;
 import barbershop_api.barbershop.Enums.DiaDaSemana;
+import barbershop_api.barbershop.Exceptions.DefaultExceptionHandler;
 import barbershop_api.barbershop.Repository.BarbeiroRepository;
 import barbershop_api.barbershop.Repository.ClienteRepository;
 import barbershop_api.barbershop.Repository.CortesRepository;
 import barbershop_api.barbershop.Repository.ReservasRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Component
 public class ReservaValidator {
@@ -29,7 +32,7 @@ public class ReservaValidator {
         this.reversasRepository = reversasRepository;
     }
 
-    public void validar(ReservasDTO dto) {
+    public void validar(ReservasDTO dto) throws DefaultExceptionHandler{
         validarCampoObrigatorios(dto);
         validarBarbeiroExistente(dto.getCodBarbeiro());
         validarClienteExiste(dto.getCodCliente());
@@ -39,9 +42,9 @@ public class ReservaValidator {
         validarHorarioDaSolicitacaoDeReserva(dto);
     }
 
-    private void validarCampoObrigatorios(ReservasDTO dto) {
+    private void validarCampoObrigatorios(ReservasDTO dto) throws DefaultExceptionHandler {
         if (dto.getCodBarbeiro() == null || dto.getCodCliente() == null || dto.getCodCorte() == null || dto.getDiaDaSemana() == null || dto.getHorarioCorte() == null) {
-            throw new RuntimeException("Todos os campos são obrigatórios.");
+            throw new DefaultExceptionHandler(HttpStatus.NO_CONTENT.value(), "Todos os campos são obrigatórios.");
         }
     }
 
@@ -63,9 +66,9 @@ public class ReservaValidator {
         }
     }
 
-    private void validarHorario(String horario) {
+    private Date validarHorario(Date horario) {
         try {
-            LocalTime.parse(horario, DateTimeFormatter.ofPattern("HH:mm"));
+            return horario;
         } catch (Exception e) {
             throw new RuntimeException("Formato de horário inválido.");
         }
@@ -81,11 +84,11 @@ public class ReservaValidator {
 
     private void validarHorarioDaSolicitacaoDeReserva(ReservasDTO dto){
 
-        LocalTime horario = LocalTime.parse(dto.getHorarioCorte(), DateTimeFormatter.ofPattern("HH:mm"));
+        Date horario = dto.getHorarioCorte();
 
         try{
-            if(horario.isBefore(LocalTime.of(8, 0)) || horario.isAfter(LocalTime.of(18, 0))){
-                throw new RuntimeException("Horário fora do expediente. Permitido apenas entre 08:00 e 18:00.");
+            if (horario.before(new Date())) {
+                throw new RuntimeException("Não é possível fazer reservas para datas ou horários no passado.");
             }
         } catch (Exception e) {
             throw new RuntimeException("Formato de horário inválido.");

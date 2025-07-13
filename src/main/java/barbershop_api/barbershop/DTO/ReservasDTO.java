@@ -4,6 +4,7 @@ import barbershop_api.barbershop.Enums.DiaDaSemana;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,5 +18,5 @@ public class ReservasDTO {
     private Long codBarbeiro;
     private Long codFluxo;
     private DiaDaSemana diaDaSemana;
-    private String horarioCorte;
+    private Date horarioCorte;
 }

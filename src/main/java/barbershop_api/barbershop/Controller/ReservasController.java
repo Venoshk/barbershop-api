@@ -19,7 +19,7 @@ public class ReservasController {
     @Autowired
     private ReservasService reservasService;
 
-    @GetMapping(value = "/suas/{id}")
+    @GetMapping(value = "/minhas-reservas/{id}")
     public List<ConsultarReservasDTO> buscarPorReservas(@PathVariable("id") Long id) throws DefaultExceptionHandler{
         return reservasService.buscarPorReservas(id);
     }

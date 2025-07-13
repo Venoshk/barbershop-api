@@ -45,11 +45,11 @@ public class ReservasService {
             boolean reserva = reversasRepository.findByCodBarbeiroAndDiaDaSemanaAndHorarioCorte(
                     dto.getCodBarbeiro(),
                     dto.getDiaDaSemana(),
-                    new Date()
+                    dto.getHorarioCorte()
             ).isPresent();
 
             if (reserva) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe uma reserva para esse barbeiro nesse dia e horário!");
+                throw new DefaultExceptionHandler(HttpStatus.CONFLICT.value(), "Já existe uma reserva para esse barbeiro nesse dia e horário!");
             }
 
             ReservasCortesEntity objeto = new ReservasCortesEntity();
@@ -57,7 +57,7 @@ public class ReservasService {
             objeto.setCodCorte(dto.getCodCorte());
             objeto.setCodBarbeiro(dto.getCodBarbeiro());
             objeto.setDiaDaSemana(dto.getDiaDaSemana());
-            objeto.setHorarioCorte(new Date());
+            objeto.setHorarioCorte(dto.getHorarioCorte());
             objeto.setCodFluxo(dto.getCodFluxo());
 
             ReservasCortesEntity salvo = reversasRepository.save(objeto);
